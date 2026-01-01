@@ -9,12 +9,14 @@ def start_postgres():
     print("Starting PostgreSQL container via Testcontainers...")
     # Fixed port for local development convenience
     port = 5432
-    postgres = PostgresContainer("postgres:16-alpine", driver=None)
-    postgres.with_bind_ports(5432, 5432)
+    postgres = PostgresContainer("postgres:16-alpine", username="postgres", password="postgres", dbname="polaris", driver=None)
     postgres.start()
     
-    db_url = postgres.get_connection_url().replace("psycopg2", "postgresql")
-    print(f"PostgreSQL started successfully!")
+    # Get the dynamic port assigned by testcontainers
+    port = postgres.get_exposed_port(5432)
+    db_url = f"postgresql://postgres:postgres@localhost:{port}/polaris"
+    
+    print(f"PostgreSQL started successfully on port {port}!")
     print(f"Connection URL: {db_url}")
     print(f"Container ID: {postgres.get_wrapped_container().id}")
     

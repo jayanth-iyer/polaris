@@ -2,6 +2,8 @@
 
 Polaris is a Control Plane for managing self-hosted Kafka infrastructure across multi-cloud Kubernetes environments.
 
+Detailed UI design can be found in [polaris-ui-design.md](docs/polaris-ui-design.md).
+
 ## Architecture Overview
 
 ```mermaid

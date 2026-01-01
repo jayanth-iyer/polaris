@@ -3,13 +3,13 @@
 This plan outlines the phase-wise implementation of the Polaris Control Plane, a self-hosted Kafka infrastructure management system built with Rust.
 
 ## Phase 1: Foundation & Core API
-- [ ] Initialize Rust project structure (Workspace with `core`, `api`, `cli`)
-- [ ] Set up `Makefile` and `UV` environment
-- [ ] Configure Testcontainers for local development (PostgreSQL)
-- [ ] Initialize Frontend project (`frontend/`) using Vite + React
-- [ ] Implement core API foundations using `Axum` and `Tonic` (gRPC)
-- [ ] Define shared data models for Cluster configuration
-- [ ] Set up PostgreSQL schema with `SQLx` (managed via Testcontainers in dev)
+- [x] Initialize Rust project structure (Workspace with `core`, `api`, `cli`)
+- [x] Set up `Makefile` and `UV` environment
+- [x] Configure Testcontainers for local development (PostgreSQL)
+- [x] Initialize Frontend project (`frontend/`) using Vite + React
+- [x] Implement core API foundations using `Axum` and `Tonic` (gRPC)
+- [x] Define shared data models for Cluster configuration
+- [x] Set up PostgreSQL schema with `SQLx` (managed via Testcontainers in dev)
 
 ## Phase 2: Kubernetes Orchestration & Strimzi Integration
 - [ ] Implement Kubernetes client integration using `kube-rs`

@@ -1,5 +1,6 @@
 # Rust
-/target
+target/
+**/target/
 Cargo.lock
 
 # Python
@@ -10,23 +11,29 @@ __pycache__/
 venv/
 ENV/
 .uv/
+.dev_db_info
 
 # Node / React / Vite
 node_modules/
+**/node_modules/
 dist/
+**/dist/
 dist-ssr/
 *.local
 .vite/
+**/ .vite/
 .env
 .env.*
 
 # IDEs
 .vscode/
 .idea/
+*.swp
+*.swo
 
 # OS
 .DS_Store
 Thumbs.db
 
 # Polaris specific
-/docs/walkthroughs/
+docs/walkthroughs/
