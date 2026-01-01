@@ -25,6 +25,13 @@ clean:
 	rm -rf .venv
 
 # Run dev environment (placeholder)
-dev:
+dev: dev-db-up
 	@echo "Starting Polaris dev environment..."
 	cargo run
+
+# Database management using Testcontainers
+dev-db-up:
+	uv run python scripts/dev_env.py up
+
+dev-db-down:
+	uv run python scripts/dev_env.py down
