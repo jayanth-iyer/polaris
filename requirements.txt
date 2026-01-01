@@ -1,2 +1,3 @@
 # Initial requirements for Polaris
 # Add python dependencies here
+testcontainers[postgres]
