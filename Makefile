@@ -1,30 +1,53 @@
 # Polaris Makefile
 
-.PHONY: setup check test build clean dev
+.PHONY: setup setup-backend setup-frontend check test build clean dev dev-api dev-frontend dev-db-up dev-db-down
 
-# Python/UV setup
-setup:
+# General setup
+setup: setup-frontend
 	uv venv
 	uv pip install -r requirements.txt
 
+setup-frontend:
+	cd frontend && npm install
+
 # Rust check
 check:
-	cargo check
+	cd backend && cargo check
 
 # Run tests
 test:
-	cargo test
+	cd backend && cargo test
 
 # Build the project
 build:
-	cargo build --release
+	cd backend && cargo build --release
+	cd frontend && npm run build
 
 # Clean artifacts
 clean:
-	cargo clean
+	cd backend && cargo clean
 	rm -rf .venv
+	rm -rf frontend/dist
+	rm -rf frontend/node_modules
 
-# Run dev environment (placeholder)
-dev:
+# Run dev environment
+dev: dev-db-up
 	@echo "Starting Polaris dev environment..."
-	cargo run
+	@echo "Run 'make dev-api' in one terminal and 'make dev-frontend' in another."
+
+dev-api:
+	cd backend && cargo run -p polaris-api
+
+dev-cli:
+	cd backend && cargo run -p polaris-cli
+
+dev-frontend:
+	cd frontend && [ -d node_modules ] || npm install
+	cd frontend && npm run dev
+
+# Database management using Testcontainers
+dev-db-up:
+	uv run python scripts/dev_env.py up
+
+dev-db-down:
+	uv run python scripts/dev_env.py down

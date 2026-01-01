@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+package polaris;
+
+service ClusterManager {
+    rpc GetClusters (GetClustersRequest) returns (GetClustersResponse);
+    rpc CreateCluster (CreateClusterRequest) returns (ClusterResponse);
+}
+
+message GetClustersRequest {}
+
+message GetClustersResponse {
+    repeated ClusterInfo clusters = 1;
+}
+
+message CreateClusterRequest {
+    string name = 1;
+    string provider = 2;
+    string kafka_version = 3;
+}
+
+message ClusterResponse {
+    string id = 1;
+    string status = 2;
+}
+
+message ClusterInfo {
+    string id = 1;
+    string name = 2;
+    string provider = 3;
+    string status = 4;
+}

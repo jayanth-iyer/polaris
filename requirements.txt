@@ -1,3 +1,4 @@
 # Initial requirements for Polaris
 # Add python dependencies here
 testcontainers[postgres]
+psycopg2-binary

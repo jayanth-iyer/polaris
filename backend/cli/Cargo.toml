@@ -1,0 +1,12 @@
+[package]
+name = "polaris-cli"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+
+[dependencies]
+polaris-core = { path = "../core" }
+clap = { version = "4.0", features = ["derive"] }
+tokio.workspace = true
+anyhow.workspace = true

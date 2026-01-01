@@ -1,0 +1,21 @@
+[package]
+name = "polaris-api"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+
+[dependencies]
+polaris-core = { path = "../core" }
+tokio.workspace = true
+axum = "0.7"
+tonic = "0.11"
+prost = "0.12"
+sqlx = { version = "0.7", features = ["runtime-tokio-rustls", "postgres", "macros", "chrono", "uuid"] }
+dotenvy = "0.15"
+serde.workspace = true
+tracing.workspace = true
+anyhow.workspace = true
+
+[build-dependencies]
+tonic-build = "0.11"
