@@ -1,7 +1,8 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import MainLayout from './layouts/MainLayout';
+import MainLayout from './layouts/MainLayout.jsx';
 import Dashboard from './pages/Dashboard';
 import ClusterList from './pages/ClusterList';
+import ComingSoon from './components/ComingSoon';
 import './App.css';
 
 function App() {
@@ -10,9 +11,9 @@ function App() {
       <MainLayout>
         <Routes>
           <Route path="/" element={<Dashboard />} />
-          <Route path="/clusters" element={<ClusterList />} />
-          <Route path="/monitoring" element={<div className="flex items-center justify-center h-full text-slate-500">Monitoring feature coming in Phase 4</div>} />
-          <Route path="/settings" element={<div className="flex items-center justify-center h-full text-slate-500">Settings feature coming in Phase 5</div>} />
+          <Route path="/clusters" element={<ComingSoon featureName="Cluster Management" phase="Phase 3" />} />
+          <Route path="/monitoring" element={<ComingSoon featureName="Real-time Monitoring" phase="Phase 4" />} />
+          <Route path="/settings" element={<ComingSoon featureName="System Settings" phase="Phase 5" />} />
         </Routes>
       </MainLayout>
     </Router>
