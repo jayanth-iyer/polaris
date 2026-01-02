@@ -2,6 +2,8 @@
 
 Polaris is a robust Control Plane for managing self-hosted Kafka infrastructure across multi-cloud Kubernetes environments. Built with Rust for high performance, resource efficiency, and type-safe state management.
 
+![Polaris Dashboard](screenshots/Polaris-Dashboard.png)
+
 ## Project Structure
 
 - `backend/`: Rust workspace containing the control plane logic.
@@ -80,3 +82,4 @@ make dev-cli -- status
 - [Design Document](docs/design-doc.md)
 - [UI Design Document](docs/polaris-ui-design.md)
 - [Phase 1 Walkthrough](docs/walkthrough-phase-1.md)
+- [Phase 2 Walkthrough](docs/walkthrough-phase-2.md)
