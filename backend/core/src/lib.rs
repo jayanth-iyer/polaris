@@ -1,5 +1,9 @@
 use serde::{Deserialize, Serialize};
 
+pub mod k8s;
+pub mod strimzi;
+pub mod workflow;
+
 #[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct Cluster {
     pub id: String,

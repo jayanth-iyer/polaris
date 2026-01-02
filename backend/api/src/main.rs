@@ -1,10 +1,14 @@
 use axum::{routing::get, Router};
+use tracing::info;
 use std::net::SocketAddr;
 use tonic::{transport::Server, Request, Response, Status};
 use sqlx::postgres::PgPoolOptions;
 use sqlx::{Pool, Postgres};
 use std::env;
 use std::fs;
+use polaris_core::k8s::K8sClient;
+use polaris_core::workflow::provision_kafka_cluster;
+use std::sync::Arc;
 
 pub mod polaris {
     tonic::include_proto!("polaris");
@@ -17,11 +21,12 @@ use polaris::{GetClustersRequest, GetClustersResponse, CreateClusterRequest, Clu
 pub struct MyClusterManager {
     #[allow(dead_code)]
     pool: Pool<Postgres>,
+    k8s: Arc<K8sClient>,
 }
 
 impl MyClusterManager {
-    pub fn new(pool: Pool<Postgres>) -> Self {
-        Self { pool }
+    pub fn new(pool: Pool<Postgres>, k8s: Arc<K8sClient>) -> Self {
+        Self { pool, k8s }
     }
 }
 
@@ -50,11 +55,18 @@ impl ClusterManager for MyClusterManager {
         request: Request<CreateClusterRequest>,
     ) -> Result<Response<ClusterResponse>, Status> {
         let req = request.into_inner();
+        
+        info!("Creating cluster: {} with provider: {}", req.name, req.provider);
+
+        // For now, we assume namespace "default" and 3 replicas
+        provision_kafka_cluster(&self.k8s, "default", &req.name, 3)
+            .await
+            .map_err(|e| Status::internal(format!("Failed to provision cluster: {}", e)))?;
+
         let reply = ClusterResponse {
-            id: "uuid-placeholder".to_string(),
+            id: uuid::Uuid::new_v4().to_string(),
             status: "Provisioning".to_string(),
         };
-        println!("Creating cluster: {} with provider: {}", req.name, req.provider);
         Ok(Response::new(reply))
     }
 }
@@ -100,8 +112,12 @@ async fn main() -> anyhow::Result<()> {
     println!("Database migrations completed.");
 
     // gRPC server setup
+    let k8s_client = Arc::new(K8sClient::new().await?);
+    k8s_client.check_health().await?;
+    println!("Kubernetes connection verified.");
+
     let grpc_addr = "[::1]:50051".parse()?;
-    let cluster_manager = MyClusterManager::new(pool.clone());
+    let cluster_manager = MyClusterManager::new(pool.clone(), k8s_client);
 
     println!("gRPC server listening on {}", grpc_addr);
     let grpc_server = Server::builder()

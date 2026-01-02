@@ -11,3 +11,6 @@ serde_json.workspace = true
 tracing.workspace = true
 anyhow.workspace = true
 thiserror.workspace = true
+kube.workspace = true
+k8s-openapi.workspace = true
+schemars.workspace = true
